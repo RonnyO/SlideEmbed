@@ -1,115 +1,23 @@
-
-<!DOCTYPE html> 
+<!doctype html> 
 <html> 
 <head> 
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <title>Web Presentations Fullscreen button - jsFiddle demo by Ronny</title> 
-  <script type='text/javascript' src='http://code.jquery.com/jquery-1.6.js'></script> 
-  
-  
-  <link rel="stylesheet" type="text/css" href="/css/result-light.css"> 
-  
-  <style type='text/css'> 
-    body {font-family: Calibri, sans-serif; margin: 0; padding: 0;}
-.Section {border: 1px solid #ccc; background: #EEE; text-align: center; font-size: 20px;}
- 
-img {width: 90%; text-align: center;}
- 
-ul,li {margin: 0; padding: 0;}
-.embedControls {background: #eee; font-weight: bold; list-style: none; position: fixed; bottom: 0; width: 100%;}
-.embedControls li {float: right; margin-right: 10px;}
- 
- 
-/* clearfix */
-.clearfix:before,
-.clearfix:after {
-    content:"";
-    display:table;
-}
- 
-.clearfix:after {
-    clear:both;
-}
- 
-/* For IE 6/7 (trigger hasLayout) */
-.clearfix {
-    zoom:1;
-}
- 
- 
-  </style> 
-  
-  <script type='text/javascript'> 
-  //<![CDATA[ 
-  $(function(){
-  // consoledummy.js
-(function(b){function c(){}for(var d="assert,count,debug,dir,dirxml,error,exception,group,groupCollapsed,groupEnd,info,log,markTimeline,profile,profileEnd,time,timeEnd,trace,warn".split(","),a;a=d.pop();)b[a]=b[a]||c})(window.console=window.console||{});
- 
- 
-(function($){
-    var $controls = $('<ul class="embedControls clearfix"> \
-                          <li class="fullscreenBtn"><a href="#">Fullscreen</a></li>\
-                      </ul>'),
-        popup,
-        inFullscreenMode = function(){
-            return /fullscreen=true/.test(document.location.href);
-        },
-        goFullscreen = function(){
-            console.log('goFullscreen');
-            popup = window.open(
-                document.location.href + '?fullscreen=true',
-                null,
-                'left=0,\
-                top=0,\
-                width=' + screen.availWidth + '\
-                height=' + screen.availHeight + '\
-                resizable=no,\
-                menubar=no,\
-                toolbar=no,\
-                location=no,\
-                personalbar=no,\
-                status=no,\
-                scrollbars=no'
-            );
-        },
-        exitFullscreen = function(){
-            console.log('exitFullscreen');
-            window.close();
-        };
-            
-    window.injectControls = function(){
-        $('body').append($controls);
-    };
-    
-    
-    $('a', $controls).click(function(){
-        if (inFullscreenMode()) {
-            exitFullscreen()
-        } else {
-            goFullscreen()
-        }
-    });
-})(jQuery);
- 
- 
- 
-injectControls();
- 
-  });
-  //]]> 
-  </script> 
-  
+  <meta charset="utf-8">
+  <title>SlideEmbed - The Embed Bar for Web Presentations</title> 
+  <style type='text/css'>
+	body {font-family: Calibri, sans-serif;}
+	.Section {border: 1px solid #ccc; background: #EEE; text-align: center; font-size: 20px;}
+	img {width: 90%; text-align: center;} 
+  </style>
+  <link rel="stylesheet" type="text/css" href="SlideEmbed.css"> 
 </head> 
 <body> 
-  <div class="Section"> 
-<h1>My awesome Slideshow</h1> 
-<h2>Could be made with the html5rocks slideshow, CSSS, WebSlider, whatever</h2> 
-<img src="http://lorempixum.com/600/400/"> 
+<div class="Section"> 
+	<h1>My awesome Slideshow</h1> 
+	<h2>Could be made with the html5rocks slideshow, CSSS, WebSlider, whatever</h2> 
+	<img src="http://lorempixum.com/600/400/"> 
 </div> 
  
-  
+  <script  src='http://code.jquery.com/jquery-1.6.js'></script> 
+  <script src="SlideEmbed.js"></script>
 </body> 
- 
- 
-</html> 
- 
+</html>
