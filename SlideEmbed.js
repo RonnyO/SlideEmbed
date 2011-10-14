@@ -1,7 +1,9 @@
 $(function(){
 	(function($){
 		var $controls = $('<ul class="embedControls clearfix"> \
-						<li class="fullscreenBtn"><a href="#">Fullscreen</a></li>\
+						<li class="fullscreenBtn"><a href="javascript:void(0)">Fullscreen</a></li>\
+						<li class="linkBtn"><a href="javascript:void(0)">Share</a></li>\
+						<li class="embedBtn"><a href="javascript:void(0)">Embed</a></li>\
 						</ul>'),
 		popup,
 		inFullscreenMode = function(){
@@ -11,7 +13,6 @@ $(function(){
 			return !(window === window.top);
 		}
 		goFullscreen = function(){
-			console.log('goFullscreen');
 			popup = window.open(
 			document.location.href + '?fullscreen=true',
 			null,
@@ -29,22 +30,31 @@ $(function(){
 			);
 		},
 		exitFullscreen = function(){
-			console.log('exitFullscreen');
 			window.close();
 		};
 		
 		window.injectControls = function(){
-			if (isEmbedded()) {
-				$('body').append($controls);
-			}
+			$('body').append($controls);
 		};
 		
 		
-		$('.fullscreenBtn a', $controls).click(function(){
-			if (inFullscreenMode()) {
-				exitFullscreen()
-			} else {
-				goFullscreen()
+		$('a', $controls).click(function(){
+			var btnType = this.parentNode.className;
+			// Identify the clicked button
+			if (btnType.indexOf('fullscreenBtn') > -1) {
+				if (inFullscreenMode()) {
+					exitFullscreen()
+				} else {
+					goFullscreen()
+				}
+			}
+			else if (btnType.indexOf('linkBtn') > -1) {
+				var url = document.location.href,
+					queryStringIdx = url.indexOf('?');
+				url = queryStringIdx > -1 ? url.substring(0, queryStringIdx) : url;
+				alert(url);
+			}
+			else if (btnType.indexOf('embedBtn') > -1) {
 			}
 		});
 	})(jQuery);
