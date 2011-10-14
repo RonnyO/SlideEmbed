@@ -40,6 +40,10 @@ $(function(){
 		
 		$('a', $controls).click(function(){
 			var btnType = this.parentNode.className;
+			var slideshowUrl = document.location.href,
+				queryStringIdx = slideshowUrl.indexOf('?');
+			slideshowUrl = queryStringIdx > -1 ? slideshowUrl.substring(0, queryStringIdx) : slideshowUrl;
+			
 			// Identify the clicked button
 			if (btnType.indexOf('fullscreenBtn') > -1) {
 				if (inFullscreenMode()) {
@@ -49,12 +53,10 @@ $(function(){
 				}
 			}
 			else if (btnType.indexOf('linkBtn') > -1) {
-				var url = document.location.href,
-					queryStringIdx = url.indexOf('?');
-				url = queryStringIdx > -1 ? url.substring(0, queryStringIdx) : url;
-				alert(url);
+				alert(slideshowUrl);
 			}
 			else if (btnType.indexOf('embedBtn') > -1) {
+				alert('<iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"></iframe>');
 			}
 		});
 	})(jQuery);
