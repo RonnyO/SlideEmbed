@@ -26,7 +26,8 @@ $(function(){
 			location=no,\
 			personalbar=no,\
 			status=no,\
-			scrollbars=no'
+			scrollbars=no,\
+			fullscreen=yes'	// Maximized in IE. Solving the concealed control bar problem in popup window.
 			);
 		},
 		exitFullscreen = function(){
@@ -37,7 +38,6 @@ $(function(){
 			$('body').append($controls);
 		};
 		
-		
 		$('a', $controls).click(function(){
 			var btnType = this.parentNode.className;
 			var slideshowUrl = document.location.href,
@@ -47,16 +47,16 @@ $(function(){
 			// Identify the clicked button
 			if (btnType.indexOf('fullscreenBtn') > -1) {
 				if (inFullscreenMode()) {
-					exitFullscreen()
+					exitFullscreen();
 				} else {
-					goFullscreen()
+					goFullscreen();
 				}
 			}
 			else if (btnType.indexOf('linkBtn') > -1) {
-				alert(slideshowUrl);
+				alert('Share this slideshow:\n' + slideshowUrl);
 			}
 			else if (btnType.indexOf('embedBtn') > -1) {
-				alert('<iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"></iframe>');
+				alert('Use this code to embed the slideshow in your page:\n' + '<iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"></iframe>');
 			}
 		});
 	})(jQuery);
