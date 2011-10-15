@@ -1,6 +1,19 @@
 $(function(){
 	(function($){
-		var $controls = $('<ul class="embedControls clearfix"> \
+		var helpers = {
+			// Get: html string
+			// Return: correspondent document fragment
+			createFragment: function(htmlStr) {
+				var frag = document.createDocumentFragment(),
+				temp = document.createElement('div');
+				temp.innerHTML = htmlStr;
+				while (temp.firstChild) {
+					frag.appendChild(temp.firstChild);
+				}
+				return frag;
+			}
+		},
+		$controls = $('<ul class="embedControls clearfix"> \
 						<li class="fullscreenBtn"><a href="javascript:void(0)">Fullscreen</a></li>\
 						<li class="linkBtn"><a href="javascript:void(0)">Share</a></li>\
 						<li class="embedBtn"><a href="javascript:void(0)">Embed</a></li>\
@@ -27,7 +40,7 @@ $(function(){
 			personalbar=no,\
 			status=no,\
 			scrollbars=no,\
-			fullscreen=yes'	// Maximized in IE. Solving the concealed control bar problem in popup window.
+			fullscreen=yes'	// Maximized in IE. Solving the concealed control bar problem in the popup window.
 			);
 		},
 		exitFullscreen = function(){
@@ -41,7 +54,7 @@ $(function(){
 		$('a', $controls).click(function(){
 			var btnType = this.parentNode.className;
 			var slideshowUrl = document.location.href,
-				queryStringIdx = slideshowUrl.indexOf('?');
+			queryStringIdx = slideshowUrl.indexOf('?');
 			slideshowUrl = queryStringIdx > -1 ? slideshowUrl.substring(0, queryStringIdx) : slideshowUrl;
 			
 			// Identify the clicked button
@@ -53,10 +66,30 @@ $(function(){
 				}
 			}
 			else if (btnType.indexOf('linkBtn') > -1) {
-				alert('Share this slideshow:\n' + slideshowUrl);
+				var msgHtml =	'<div class="embedControlsMsg-mask">\
+									<div class="embedControlsMsg-wrapper">\
+										<div class="embedControlsMsg">\
+											<p>Share this slideshow:\
+												<code>' + slideshowUrl + '</code>\
+											</p>\
+											<a class="copyBtn" href="javascript:void(0)">Copy!</a>\
+										</div>\
+									</div>\
+								</div>';
+				document.body.insertBefore(helpers.createFragment(msgHtml), document.body.childNodes[0]);
 			}
 			else if (btnType.indexOf('embedBtn') > -1) {
-				alert('Use this code to embed the slideshow in your page:\n' + '<iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"></iframe>');
+				var msgHtml =	'<div class="embedControlsMsg-mask">\
+									<div class="embedControlsMsg-wrapper">\
+										<div class="embedControlsMsg">\
+											<p>Use this code to embed the slideshow in your page:\
+												<code>&lt;iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"&gt;&lt;/iframe&gt;</code>\
+											</p>\
+											<a class="copyBtn" href="javascript:void(0)">Copy!</a>\
+										</div>\
+									</div>\
+								</div>';
+				document.body.insertBefore(helpers.createFragment(msgHtml), document.body.childNodes[0]);
 			}
 		});
 	})(jQuery);
