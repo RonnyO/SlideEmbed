@@ -75,31 +75,43 @@ function SlideEmbedNS() {
 				dialogElementHtml = function(innerHtml) { 
 					return '<div id="' + id + '" class="embedControlsMsg-mask unseen">' +
 								'\n\t<div class="embedControlsMsg-wrapper">' +
+									'\n\t\t<a href="javascript:void(0)" class="embedControlsMsg-btnClose" onclick="activeDialog.hide()">X<\a>\n' +
 									'\n\t\t<div class="embedControlsMsg">\n' + innerHtml +
 									'\n\t\t<\div>' +
 								'\n\t<\div>'
 							'</div>' 
-				};
+				},
 				msgFrag = createFragment(dialogElementHtml(config.msgHtml)),
-				bodyInsertion = config.isPrepend ? 'insertBefore' : 'appendChild';
+				bodyInsertion = config.isPrepend ? 'insertBefore' : 'appendChild',
+				stopPropagation = function(e) { e.stopPropagation(); },
+				showDialog, hideDialog, htmlDialog;
 			
 			document.body[bodyInsertion](msgFrag, document.body.childNodes[0]);
 			dialogElement = document.getElementById(id);
-
-			return {
-				show: function() {
-					setTimeout(function() { dialogElement.className = dialogElement.className.replace("unseen", "seen"); }, 10);
-				},
-				hide: function() {
-					dialogElement.className = dialogElement.className.replace("seen", "unseen");
-				},
-				html: function(msgHtml) {
-					if (msgHtml) {
-						dialogElement.parentNode.replaceChild(createFragment(dialogElementHtml(msgHtml)), dialogElement);
-						dialogElement = document.getElementById(id);
-					}
-					return dialogElement.outerHTML;
+						
+			showDialog = function() {
+				setTimeout(function() { 
+							dialogElement.className = dialogElement.className.replace("unseen", "seen"); 
+							dialogElement.children[0].addEventListener('click', stopPropagation, false);
+							document.body.addEventListener('click', hideDialog, false);
+						}, 10);
+			};
+			hideDialog = function() {
+				dialogElement.className = dialogElement.className.replace("seen", "unseen");
+				document.body.removeEventListener('click', hideDialog, false);
+				dialogElement.children[0].removeEventListener('click', stopPropagation, false);
+			};
+			htmlDialog = function(msgHtml) {
+				if (msgHtml) {
+					dialogElement.parentNode.replaceChild(createFragment(dialogElementHtml(msgHtml)), dialogElement);
+					dialogElement = document.getElementById(id);
 				}
+				return dialogElement.outerHTML;
+			};
+			return {
+				show: showDialog,
+				hide: hideDialog,
+				html: htmlDialog
 			}
 		},
 		popup,
@@ -146,14 +158,20 @@ function SlideEmbedNS() {
 						}
 					}
 					else if (btnType.indexOf('linkBtn') > -1) {
-						var msgHtml = '<p>Share this slideshow:<code>' + slideshowUrl + '</code></p><a class="copyBtn" href="javascript:void(0)">Copy!</a>';
-							shareDialog = dialog("embedControls-shareDialog", { msgHtml: msgHtml, isPrepend: true });
-						shareDialog.show();
+						if (!window.shareDialog) {
+							var msgHtml = '<p>Share this slideshow:<code>' + slideshowUrl + '</code></p><a class="copyBtn" href="javascript:void(0)">Copy!</a>';
+							window.shareDialog = dialog("embedControls-shareDialog", { msgHtml: msgHtml, isPrepend: true });
+						}
+						window.activeDialog = shareDialog;
+						activeDialog.show();
 					}
 					else if (btnType.indexOf('embedBtn') > -1) {
-						var msgHtml = '<p>Use this code to embed the slideshow in your page:<code>&lt;iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"&gt;&lt;/iframe&gt;</code></p><a class="copyBtn" href="javascript:void(0)">Copy!</a>';
-							embedDialog = dialog("embedControls-embedDialog", { msgHtml: msgHtml, isPrepend: true });
-						embedDialog.show();
+						if (!window.embedDialog) {
+							var msgHtml = '<p>Use this code to embed the slideshow in your page:<code>&lt;iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"&gt;&lt;/iframe&gt;</code></p><a class="copyBtn" href="javascript:void(0)">Copy!</a>';
+							window.embedDialog = dialog("embedControls-embedDialog", { msgHtml: msgHtml, isPrepend: true });
+						}
+						window.activeDialog = embedDialog;
+						activeDialog.show();
 					}
 				}, false);
 			}
