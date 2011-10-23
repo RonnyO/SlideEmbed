@@ -23,6 +23,23 @@ window.outerHTML = function(node) {
 	})(node);
 };
 
+// Not very working...
+window.copyToClipboard = function(text) {
+/*    if (window.clipboardData) {
+        window.clipboardData.setData('text', text);
+    } 
+	else {
+        var clipboarddiv = document.getElementById('divclipboardswf');
+        if (!clipboarddiv) {
+            clipboarddiv = document.createElement('div');
+            clipboarddiv.setAttribute("name", "divclipboardswf");
+            clipboarddiv.setAttribute("id", "divclipboardswf");
+            document.body.appendChild(clipboarddiv);
+        }
+        clipboarddiv.innerHTML = '<embed src="clipboard.swf" FlashVars="clipboard=' + encodeURIComponent(text) + '" width="0" height="0" type="application/x-shockwave-flash"></embed>';
+    }*/
+} 
+
 // Add extend functionality: extend "this" with "properties"
 // If "target" is not specified, override "this"
 Object.prototype.extend = function(properties, target) {
@@ -159,7 +176,8 @@ function SlideEmbedNS() {
 					}
 					else if (btnType.indexOf('linkBtn') > -1) {
 						if (!window.shareDialog) {
-							var msgHtml = '<p>Share this slideshow:<code>' + slideshowUrl + '</code></p><a class="copyBtn" href="javascript:void(0)">Copy!</a>';
+							var code = slideshoeUrl,
+								msgHtml = '<p>Share this slideshow:<code>' + code + '</code></p><a class="copyBtn" href="javascript:void(0)" onclick="copyToClipboard(' + code + ')">Copy!</a>';
 							window.shareDialog = dialog("embedControls-shareDialog", { msgHtml: msgHtml, isPrepend: true });
 						}
 						window.activeDialog = shareDialog;
@@ -167,7 +185,8 @@ function SlideEmbedNS() {
 					}
 					else if (btnType.indexOf('embedBtn') > -1) {
 						if (!window.embedDialog) {
-							var msgHtml = '<p>Use this code to embed the slideshow in your page:<code>&lt;iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"&gt;&lt;/iframe&gt;</code></p><a class="copyBtn" href="javascript:void(0)">Copy!</a>';
+							var code = '&lt;iframe src="' + slideshowUrl + '" frameborder="0" width="800px" height="600px"&gt;&lt;/iframe&gt;'
+								msgHtml = '<p>Use this code to embed the slideshow in your page:<code>' + code + '</code></p><a class="copyBtn" href="javascript:void(0)" onclick="copyToClipboard(' + code + ')">Copy!</a>';
 							window.embedDialog = dialog("embedControls-embedDialog", { msgHtml: msgHtml, isPrepend: true });
 						}
 						window.activeDialog = embedDialog;
