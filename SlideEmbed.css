@@ -109,6 +109,7 @@ ul,li { margin: 0; padding: 0; }
 			}
 			.embedControlsMsg code {
 				display: block;
+				word-wrap: break-word;
 				font-family: Consolas, Courier, sans-serif; line-height: 15px;
 				margin-top: 20px;
 				font-size: 12px;
