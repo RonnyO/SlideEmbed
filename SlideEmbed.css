@@ -1,24 +1,6 @@
-body {margin: 0; padding: 0;}
-ul,li {margin: 0; padding: 0;}
+body { margin: 0; padding: 0; }
+ul,li { margin: 0; padding: 0; }
 
-.embedControls {
-	background: #eee;
-	font-weight: bold;
-	list-style: none;
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	height: 36px;
-	line-height: 36px;
-	
-	border-top: 1px solid #aaa;  /* temp until a better design is made */
-}
-.embedControls li {
-	float: right;
-	margin-right: 10px;
-}
- 
- 
 /* clearfix */
 .clearfix:before,
 .clearfix:after {
@@ -34,3 +16,111 @@ ul,li {margin: 0; padding: 0;}
 .clearfix {
     zoom:1;
 }
+
+/* Control bar */
+.embedControls {
+    height: 46px; width: 100%;
+	position: fixed; bottom: 0;    
+	background: rgb(53,68,73); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(53,68,73,1) 54%, rgba(10,16,24,1) 100%); /* FF3.6+ */
+	background: -webkit-linear-gradient(top, rgba(53,68,73,1) 54%,rgba(10,16,24,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(53,68,73,1) 54%,rgba(10,16,24,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(53,68,73,1) 54%,rgba(10,16,24,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#354449', endColorstr='#0a1018',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(53,68,73,1) 54%,rgba(10,16,24,1) 100%); /* W3C */
+	-moz-box-shadow: inset 0px 1px 2px 1px #9898AC;
+	-webkit-box-shadow: inset 0px 1px 2px 1px #9898AC;
+	box-shadow: inset 0px 1px 2px 1px #9898AC;
+	font-weight: bold; line-height: 46px; font-size: 12px;
+    list-style: none;
+	opacity: 0;
+	-webkit-transition: opacity 0.8s ease-in-out;
+	-moz-transition: opacity 0.8s ease-in-out;
+	-ms-transition: opacity 0.8s ease-in-out;	
+	transition: opacity 0.8s ease-in-out;
+}
+	html:hover  .embedControls { opacity: 1; }
+	.embedControls li {
+        margin-right: 10px;
+        float: right;
+    }
+        .embedControls a {
+            border: 1px solid rgb(142, 193, 218); padding: 7px 5px;
+            color: rgb(57, 133, 168); opacity: 0.6; text-decoration: none; text-shadow: 0 1px white;
+            background: rgb(221, 238, 246);
+            -webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -15px #cbe6f2, 0 0 3px #8ec1da;
+            -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -15px #cbe6f2, 0 0 3px #8ec1da;
+            box-shadow: inset 0 1px 3px #fff, inset 0 -15px #cbe6f2, 0 0 3px #8ec1da;
+            -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;            
+        }
+		.embedControls a:hover { opacity: 1; }
+
+/* Message Box */
+.embedControlsMsg-mask {
+	width: 100%; height: 100%;
+	position: absolute; left: 0;
+	background: -moz-linear-gradient(top, rgba(10,7,38,0.9) 0%, rgba(130,131,146,0.9) 28%, rgba(232,237,239,0.7) 52%, rgba(112,112,130,0.9) 78%, rgba(10,7,38,0.9) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(10,7,38,0.9)), color-stop(28%,rgba(130,131,146,0.9)), color-stop(52%,rgba(232,237,239,0.7)), color-stop(78%,rgba(112,112,130,0.9)), color-stop(100%,rgba(10,7,38,0.9))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(10,7,38,0.9) 0%,rgba(130,131,146,0.9) 28%,rgba(232,237,239,0.7) 52%,rgba(112,112,130,0.9) 78%,rgba(10,7,38,0.9) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(10,7,38,0.9) 0%,rgba(130,131,146,0.9) 28%,rgba(232,237,239,0.7) 52%,rgba(112,112,130,0.9) 78%,rgba(10,7,38,0.9) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(10,7,38,0.9) 0%,rgba(130,131,146,0.9) 28%,rgba(232,237,239,0.7) 52%,rgba(112,112,130,0.9) 78%,rgba(10,7,38,0.9) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e60a0726', endColorstr='#e60a0726',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(10,7,38,0.9) 0%,rgba(130,131,146,0.9) 28%,rgba(232,237,239,0.7) 52%,rgba(112,112,130,0.9) 78%,rgba(10,7,38,0.9) 100%); /* W3C */
+}
+.embedControlsMsg-mask.unseen{
+	top: -100%;
+	-webkit-transition: top 0.35s;
+	-moz-transition: top 0.35s;
+	-ms-transition: top 0.35s;
+	transition: top 0.35s;
+}
+.embedControlsMsg-mask.seen{
+	top: 0px;
+	-webkit-transition: top 0.35s;
+	-moz-transition: top 0.35s;
+	-ms-transition: top 0.35s;
+	transition: top 0.35s;
+}
+	.embedControlsMsg-wrapper {
+		border:1px solid #111; width: 430px; padding: 17px; margin: auto;
+		position: relative; top: 50%; margin-top: -120px;
+		line-height: 25px; text-align: center;
+		background-color: rgba(10, 15, 40, 0.55);
+		-webkit-box-shadow: 0 0 5px 2px #222, inset 0px 0px 3px 0px #777;
+		-moz-box-shadow: 0 0 5px 2px #222, inset 0px 0px 3px 0px #777;
+		box-shadow: 0 0 5px 2px #222, inset 0px 0px 3px 0px #777;
+		-webkit-border-radius: 7px; -moz-border-radius: 7px; border-radius: 7px;
+	}
+		.embedControlsMsg-btnClose {
+			position: absolute; top: -3px; right: 4px;
+			font-family: Comic Sans MS, sans, sans-serif; font-weight: bold; font-size: 15px;
+			color: rgba(0, 0, 0, 0.9); text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.6); text-decoration: none;
+		}
+		.embedControlsMsg-btnClose:hover {
+			color: rgba(0, 0, 0, 0.7);
+		}
+		.embedControlsMsg {
+			border: 1px solid #111; padding: 10px;
+			background-color: white;
+		}
+			.embedControlsMsg p {
+				margin: 0;
+				font-size: 18px; text-align: left;
+			}
+			.embedControlsMsg code {
+				display: block;
+				font-family: Consolas, Courier, sans-serif; line-height: 15px;
+				margin-top: 20px;
+				font-size: 12px;
+			}
+			.embedControlsMsg .copyBtn {
+				border: 1px solid rgb(142, 193, 218); margin: 20px auto 8px; padding: 0px 15px;
+				display: inline-block;
+				color: rgb(57, 133, 168); font-weight: bold; text-decoration: none;
+				text-shadow: 0 1px white;
+				background: rgb(221, 238, 246);
+				-webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -15px #cbe6f2, 0 0 3px #8ec1da;
+				-moz-box-shadow: inset 0 1px 3px #fff, inset 0 -15px #cbe6f2, 0 0 3px #8ec1da;
+				box-shadow: inset 0 1px 3px #fff, inset 0 -15px #cbe6f2, 0 0 3px #8ec1da;
+				-webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px;                
+			}
