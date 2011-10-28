@@ -176,7 +176,7 @@ function SlideEmbedNS() {
 					}
 					else if (btnType.indexOf('linkBtn') > -1) {
 						if (!window.shareDialog) {
-							var code = slideshoeUrl,
+							var code = slideshowUrl,
 								msgHtml = '<p>Share this slideshow:<code>' + code + '</code></p><a class="copyBtn" href="javascript:void(0)" onclick="copyToClipboard(' + code + ')">Copy!</a>';
 							window.shareDialog = dialog("embedControls-shareDialog", { msgHtml: msgHtml, isPrepend: true });
 						}
